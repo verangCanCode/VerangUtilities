@@ -1,0 +1,7 @@
+name: VerangUtilities
+version: '${project.version}'
+main: com.verang.verangutilities.VerangUtilities
+api-version: '1.20'
+authors: [Altin Curri]
+description: Simple utility plugin for Builders.
+website: https://twitter.com/verangmc
