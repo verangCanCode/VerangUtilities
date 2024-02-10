@@ -1,5 +1,33 @@
+#
+# This is the prefix value, before any message is sent to the player. I.e. a message below will look like
+# "VerangUtilities » Only players can use this command"
+#
+prefix: "&#8e4fb0&lVerang Utilities &8&l» &r"
+
+#
+# You may edit any values from the text below, without the need to add the prefix,
+# and any color coding, as that will be done automatically by the plugin.
+#
 messages:
-  command-player-only: "<html>Only players can use this command.</html>"
-  stackup-disabled: "<html>StackUp has been disabled.</html>"
-  stackup-enabled: "<html>StackUp is now enabled with a height of <amount>.</html>"
-  invalid-number: "<html>Invalid number. Please enter a valid number.</html>"
+  command-player-only: "Only players can use this command."
+  stackup-disabled: "StackUp has been disabled."
+  stackup-enabled: "StackUp is now enabled with a height of <amount>."
+  invalid-number: "Invalid number. Please enter a valid number."
+  usage-stackup: "Usage: /stackup <amount> [-a] or /stackup off"
+  no-permission: "You do not have permission to use this command."
+  not-enabled: "StackUp is not currently enabled."
+  caps-allowed: "Caps in commands are now allowed."
+  caps-disallowed: "Caps in commands are now disallowed."
+  findhome-usage: "Usage: /findhome <player name> <home name>"
+  player-not-found: "Player not found."
+  user-data-not-found: "User data not found."
+  home-not-found: "Home not found."
+  world-not-found: "World not found."
+  home-location: "<player>'s home '<home>' is located in the world <world>."
+  error-reading-home: "An error occurred while trying to find the home."
+  essentials-not-found: "Essentials plugin not found. Please install Essentials for this feature."
+  timeout-usage: "Usage: /timeout <playername>"
+  player-not-online: "The specified player is not online."
+  player-kicked: "You have disconnected <player> with a Timeout error."
+  kick-message: "Connection Error: Unhandled exception in server's UDP packet handler. Try again after the main server queue has been cleared."
+  clickable-chat-message: "Click here to visit <url>."

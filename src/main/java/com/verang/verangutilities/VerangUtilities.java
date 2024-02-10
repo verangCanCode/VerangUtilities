@@ -10,6 +10,7 @@ public class VerangUtilities extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         getLogger().info("VerangUtilities is starting up!");
+        saveDefaultConfig();
 
         // Register command executors
         getCommand("timeout").setExecutor(new TimeOutCommand(this));

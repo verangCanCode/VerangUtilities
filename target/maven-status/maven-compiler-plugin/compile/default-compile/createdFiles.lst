@@ -1,2 +1,6 @@
+com\verang\verangutilities\ClickableChat.class
+com\verang\verangutilities\HomeFinder.class
 com\verang\verangutilities\VerangUtilities.class
 com\verang\verangutilities\StackUpCommand.class
+com\verang\verangutilities\AllowCapsInCommands.class
+com\verang\verangutilities\TimeOutCommand.class
