@@ -12,13 +12,14 @@ public class VerangUtilities extends JavaPlugin {
         getLogger().info("VerangUtilities is starting up!");
 
         // Register command executors
-        this.getCommand("findhome").setExecutor(new HomeFinder(this));
-        this.getCommand("timeout").setExecutor(new TimeOutCommand(this));
+        getCommand("timeout").setExecutor(new TimeOutCommand(this));
+        getCommand("findhome").setExecutor(new HomeFinder(this));
+        getCommand("stackup").setExecutor(new StackUpCommand(this));
 
-        // Register events
+        // Register event listeners
         getServer().getPluginManager().registerEvents(new ClickableChat(this), this);
+        getServer().getPluginManager().registerEvents(new AllowCapsInCommands(this), this);
 
-        // Any additional setup you need
     }
 
     @Override

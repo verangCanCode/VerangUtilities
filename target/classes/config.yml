@@ -1,0 +1,5 @@
+messages:
+  command-player-only: "<html>Only players can use this command.</html>"
+  stackup-disabled: "<html>StackUp has been disabled.</html>"
+  stackup-enabled: "<html>StackUp is now enabled with a height of <amount>.</html>"
+  invalid-number: "<html>Invalid number. Please enter a valid number.</html>"

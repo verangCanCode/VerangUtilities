@@ -1,0 +1,12 @@
+name: VerangUtilities
+version: '1.0-SNAPSHOT'
+main: com.verang.verangutilities.VerangUtilities
+api-version: '1.20'
+authors: [Altin Curri]
+description: Simple utility plugin for Builders.
+website: https://twitter.com/verangmc
+commands:
+  stackup:
+    description: Stacks blocks on top of the one you place.
+    usage: /<command> <amount> [-a]
+    aliases: [su]
