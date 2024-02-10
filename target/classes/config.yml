@@ -10,10 +10,7 @@ prefix: "&#8e4fb0&lVerang Utilities &8&l» &r"
 #
 messages:
   command-player-only: "Only players can use this command."
-  stackup-disabled: "StackUp has been disabled."
-  stackup-enabled: "StackUp is now enabled with a height of <amount>."
   invalid-number: "Invalid number. Please enter a valid number."
-  usage-stackup: "Usage: /stackup <amount> [-a] or /stackup off"
   no-permission: "You do not have permission to use this command."
   not-enabled: "StackUp is not currently enabled."
   caps-allowed: "Caps in commands are now allowed."
@@ -31,3 +28,6 @@ messages:
   player-kicked: "You have disconnected <player> with a Timeout error."
   kick-message: "Connection Error: Unhandled exception in server's UDP packet handler. Try again after the main server queue has been cleared."
   clickable-chat-message: "Click here to visit <url>."
+  stackup-usage: "Usage: /stackup <amount> [-a] or /stackup off"
+  stackup-disabled: "StackUp has been disabled."
+  stackup-enabled: "StackUp is now enabled with a height of <amount>."
