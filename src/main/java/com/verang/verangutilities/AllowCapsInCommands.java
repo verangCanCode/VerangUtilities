@@ -22,8 +22,9 @@ public class AllowCapsInCommands implements Listener {
         Player player = event.getPlayer();
         String message = event.getMessage();
 
-        // Check if the command is /capsoff
+        // Check if the command is /capsoff, ignoring case
         if (message.equalsIgnoreCase("/capsoff")) {
+            event.setCancelled(true); // Cancel the event to prevent it from being processed further
             if (toggleCapsPlayers.contains(player)) {
                 toggleCapsPlayers.remove(player);
                 plugin.sendMessage(player, "caps-allowed");
@@ -31,9 +32,11 @@ public class AllowCapsInCommands implements Listener {
                 toggleCapsPlayers.add(player);
                 plugin.sendMessage(player, "caps-disallowed");
             }
-            event.setCancelled(true);
-        } else if (toggleCapsPlayers.contains(player)) {
-            // Process commands normally for players who have not toggled /capsoff
+            return; // Exit the method after handling /capsoff
+        }
+
+        // Disallow caps for players who have toggled /capsoff
+        if (toggleCapsPlayers.contains(player)) {
             String[] commandParts = message.split(" ");
             commandParts[0] = commandParts[0].toLowerCase(); // Force the command part to lowercase
             message = String.join(" ", commandParts);

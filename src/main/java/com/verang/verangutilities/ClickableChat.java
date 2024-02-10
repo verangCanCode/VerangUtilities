@@ -7,12 +7,13 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ClickableChat implements Listener {
-    private static final Pattern URL_PATTERN = Pattern.compile("(https?://[\\w-]+(\\.[\\w-]+)+[/#?]?.*?)(\\s|$)", Pattern.CASE_INSENSITIVE);
+    private static final Pattern URL_PATTERN = Pattern.compile("(https?://[\\w-]+(\\.[\\w-]+)+([/?#][\\w-.]*)?)", Pattern.CASE_INSENSITIVE);
     private final JavaPlugin plugin;
 
     public ClickableChat(JavaPlugin plugin) {
@@ -20,59 +21,48 @@ public class ClickableChat implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onAsyncPlayerChat(AsyncPlayerChatEvent event) {
-        Player player = event.getPlayer();
         String message = event.getMessage();
         Matcher matcher = URL_PATTERN.matcher(message);
 
         if (matcher.find()) {
+            Player player = event.getPlayer();
             event.setCancelled(true); // Cancel the event to prevent other handlers from processing it further
 
-            // Create a new TextComponent for the whole message
-            TextComponent wholeMessage = new TextComponent("");
+            String url = matcher.group();
 
-            int lastMatchEnd = 0;
-            matcher.reset(); // Reset the matcher to use it in the loop
+            // Create a new chat message with the default color
+            TextComponent chatMessage = new TextComponent();
 
-            // Loop through all matches
-            while (matcher.find()) {
-                // Text before URL
-                String beforeUrl = message.substring(lastMatchEnd, matcher.start());
-                if (!beforeUrl.isEmpty()) {
-                    wholeMessage.addExtra(new TextComponent(beforeUrl));
-                }
+            // Add the prefix before the URL
+            String prefix = event.getFormat().substring(0, event.getFormat().indexOf("%2$s")).replaceAll("%1\\$s", player.getDisplayName());
+            TextComponent prefixComponent = new TextComponent(prefix);
+            chatMessage.addExtra(prefixComponent);
 
-                // URL TextComponent
-                String url = matcher.group(1);
-                TextComponent urlComponent = new TextComponent(url);
-                urlComponent.setColor(ChatColor.BLUE);
-                urlComponent.setUnderlined(true);
-                urlComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url));
+            // Add the URL component
+            TextComponent urlComponent = new TextComponent(url);
+            urlComponent.setColor(ChatColor.of("#83c9d6"));
+            urlComponent.setUnderlined(true);
+            urlComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url.startsWith("http") ? url : "http://" + url));
+            chatMessage.addExtra(urlComponent);
 
-                wholeMessage.addExtra(urlComponent);
+            // Add a space after the URL
+            TextComponent spaceComponent = new TextComponent(" ");
+            chatMessage.addExtra(spaceComponent);
 
-                lastMatchEnd = matcher.end();
+            // Add any remaining text after the link
+            if (message.length() > matcher.end()) {
+                String remainingText = message.substring(matcher.end());
+                TextComponent remainingTextComponent = new TextComponent(remainingText);
+                chatMessage.addExtra(remainingTextComponent);
             }
 
-            // Add the rest of the message if there's any left after the last URL
-            if (lastMatchEnd < message.length()) {
-                wholeMessage.addExtra(new TextComponent(message.substring(lastMatchEnd)));
-            }
-
-            // Prepend player's display name and group (if applicable)
-            String displayName = player.getDisplayName(); // Or use Essentials's method to get the formatted name
-            TextComponent playerNameComponent = new TextComponent(displayName + ": ");
-            playerNameComponent.setColor(ChatColor.GRAY); // Or any other color
-
-            TextComponent finalComponent = new TextComponent("");
-            finalComponent.addExtra(playerNameComponent);
-            finalComponent.addExtra(wholeMessage);
-
-            // Send the composed message to all recipients
+            // Send formatted message directly to all recipients, bypassing Essentials or other chat plugins
             for (Player recipient : event.getRecipients()) {
-                recipient.spigot().sendMessage(finalComponent);
+                recipient.spigot().sendMessage(chatMessage);
             }
         }
     }
 }
+

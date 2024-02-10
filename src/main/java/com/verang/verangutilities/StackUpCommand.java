@@ -40,7 +40,7 @@ public class StackUpCommand implements CommandExecutor, Listener {
         }
 
         if (args.length == 0) {
-            ((VerangUtilities) plugin).sendMessage(player, "usage");
+            ((VerangUtilities) plugin).sendMessage(player, "stackup-usage");
             return true;
         } else if (args[0].equalsIgnoreCase("off")) {
             isEnabledForPlayer.put(player, false);

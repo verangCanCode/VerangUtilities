@@ -10,6 +10,7 @@ public class VerangUtilities extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         getLogger().info("VerangUtilities is starting up!");
+        getLogger().info("Registering event listeners...");
         saveDefaultConfig();
 
         // Register command executors

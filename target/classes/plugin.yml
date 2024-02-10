@@ -13,7 +13,7 @@ commands:
   capsoff:
     description: Allows players to toggle whether they can use uppercase letters in commands.
     usage: /<command>
-    aliases: [co]
+    aliases: [tc]
   findhome:
     description: Finds the location of another player's home by name.
     usage: /<command> <player name> <home name>

@@ -68,7 +68,13 @@ public class HomeFinder implements CommandExecutor {
                 return true;
             }
 
-            String worldName = userdataConfig.getString("homes." + homeName + ".world");
+            String worldUUID = userdataConfig.getString("homes." + homeName + ".world");
+            if (worldUUID == null) {
+                plugin.sendMessage(player, "world-not-found");
+                return true;
+            }
+
+            String worldName = Bukkit.getWorld(UUID.fromString(worldUUID)).getName();
             if (worldName == null) {
                 plugin.sendMessage(player, "world-not-found");
                 return true;
