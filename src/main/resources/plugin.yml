@@ -5,3 +5,33 @@ api-version: '1.20'
 authors: [Altin Curri]
 description: Simple utility plugin for Builders.
 website: https://twitter.com/verangmc
+commands:
+  stackup:
+    description: Stacks blocks above the one placed by the player.
+    usage: /<command> <amount> [-a] or /<command> off
+    aliases: [su]
+  capsoff:
+    description: Allows players to toggle whether they can use uppercase letters in commands.
+    usage: /<command>
+    aliases: [co]
+  findhome:
+    description: Finds the location of another player's home by name.
+    usage: /<command> <player name> <home name>
+    aliases: [fh]
+  timeout:
+    description: Disconnects a player with a timeout error message.
+    usage: /timeout <playername>
+permissions:
+  verangutilities.stackup:
+    description: Allows use of the stackup command
+    default: op
+  verangutilities.capsoff:
+    description: Allows toggling the use of caps in commands
+    default: true
+  verangutilities.findhome:
+    description: Allows finding the location of another player's home
+    default: op
+  verangutilities.timeout:
+    description: Allows the user to disconnect players with a timeout error message.
+    default: op
+

@@ -11,10 +11,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class StackUpCommand implements CommandExecutor, Listener {
     private JavaPlugin plugin;
-    private boolean isEnabled = false;
-    private int stackHeight = 0;
+    private Map<Player, Boolean> isEnabledForPlayer = new HashMap<>();
+    private Map<Player, Integer> stackHeightForPlayer = new HashMap<>();
     private boolean stopAtCeiling = false;
 
     public StackUpCommand(JavaPlugin plugin) {
@@ -30,15 +33,24 @@ public class StackUpCommand implements CommandExecutor, Listener {
         }
 
         Player player = (Player) sender;
-        if (args.length > 0 && args[0].equalsIgnoreCase("off")) {
-            isEnabled = false;
+        if (!player.hasPermission("verangutilities.stackup")) {
+            player.sendMessage(plugin.getConfig().getString("messages.no-permission"));
+            return true;
+        }
+
+        if (args.length == 0) {
+            player.sendMessage(plugin.getConfig().getString("messages.usage"));
+            return true;
+        } else if (args[0].equalsIgnoreCase("off")) {
+            isEnabledForPlayer.put(player, false);
             player.sendMessage(plugin.getConfig().getString("messages.stackup-disabled"));
             return true;
         }
 
         try {
-            stackHeight = Integer.parseInt(args[0]);
-            isEnabled = true;
+            int stackHeight = Integer.parseInt(args[0]);
+            isEnabledForPlayer.put(player, true);
+            stackHeightForPlayer.put(player, stackHeight);
             stopAtCeiling = args.length > 1 && args[1].equalsIgnoreCase("-a");
             player.sendMessage(plugin.getConfig().getString("messages.stackup-enabled").replace("<amount>", String.valueOf(stackHeight)));
         } catch (NumberFormatException e) {
@@ -50,15 +62,18 @@ public class StackUpCommand implements CommandExecutor, Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-        if (!isEnabled || !event.getPlayer().equals(event.getPlayer())) {
+        Player player = event.getPlayer();
+        Boolean isEnabled = isEnabledForPlayer.getOrDefault(player, false);
+        if (!isEnabled) {
             return;
         }
 
+        Integer stackHeight = stackHeightForPlayer.getOrDefault(player, 0);
         Block block = event.getBlockPlaced();
         Material blockType = block.getType();
         for (int i = 1; i < stackHeight; i++) {
             Block above = block.getRelative(0, i, 0);
-            if (stopAtCeiling && !above.getType().equals(Material.AIR)) {
+            if (stopAtCeiling && above.getType() != Material.AIR) {
                 break;
             }
             above.setType(blockType);
