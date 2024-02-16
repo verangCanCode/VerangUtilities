@@ -8,39 +8,44 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class AllowCapsInCommands implements Listener {
-    private Set<Player> toggleCapsPlayers;
-    private VerangUtilities plugin;
+    private final Set<Player> playersWithCapsOff;
+    private final VerangUtilities plugin;
 
     public AllowCapsInCommands(VerangUtilities plugin) {
         this.plugin = plugin;
-        this.toggleCapsPlayers = new HashSet<>();
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+        this.playersWithCapsOff = new HashSet<>();
+        // Ensure this class is only registered as an event listener once, preferably in the main class.
     }
 
     @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
-        Player player = event.getPlayer();
         String message = event.getMessage();
+        Player player = event.getPlayer();
 
-        // Check if the command is /capsoff, ignoring case
-        if (message.equalsIgnoreCase("/capsoff")) {
-            event.setCancelled(true); // Cancel the event to prevent it from being processed further
-            if (toggleCapsPlayers.contains(player)) {
-                toggleCapsPlayers.remove(player);
-                plugin.sendMessage(player, "caps-allowed");
-            } else {
-                toggleCapsPlayers.add(player);
-                plugin.sendMessage(player, "caps-disallowed");
-            }
-            return; // Exit the method after handling /capsoff
+        if ("/capsoff".equalsIgnoreCase(message)) {
+            handleCapsOffCommand(player);
+            event.setCancelled(true); // Prevent further processing of the command
+        } else if (playersWithCapsOff.contains(player)) {
+            // Process other commands with caps off if applicable
+            convertCommandToLowerCase(event);
         }
+    }
 
-        // Disallow caps for players who have toggled /capsoff
-        if (toggleCapsPlayers.contains(player)) {
-            String[] commandParts = message.split(" ");
-            commandParts[0] = commandParts[0].toLowerCase(); // Force the command part to lowercase
-            message = String.join(" ", commandParts);
-            event.setMessage(message);
+    private void handleCapsOffCommand(Player player) {
+        if (playersWithCapsOff.contains(player)) {
+            playersWithCapsOff.remove(player);
+            plugin.sendMessage(player, "caps-allowed");
+        } else {
+            playersWithCapsOff.add(player);
+            plugin.sendMessage(player, "caps-disallowed");
         }
+    }
+
+    private void convertCommandToLowerCase(PlayerCommandPreprocessEvent event) {
+        String message = event.getMessage();
+        String[] parts = message.split("\\s+", 2);
+        String command = parts[0].toLowerCase();
+        String args = parts.length > 1 ? " " + parts[1] : "";
+        event.setMessage(command + args);
     }
 }

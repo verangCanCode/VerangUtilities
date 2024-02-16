@@ -43,7 +43,7 @@ public class ClickableChat implements Listener {
             // Add the URL component
             TextComponent urlComponent = new TextComponent(url);
             urlComponent.setColor(ChatColor.of("#83c9d6"));
-            urlComponent.setUnderlined(true);
+            urlComponent.setItalic(true);
             urlComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url.startsWith("http") ? url : "http://" + url));
             chatMessage.addExtra(urlComponent);
 
