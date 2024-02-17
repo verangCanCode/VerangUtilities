@@ -20,6 +20,9 @@ commands:
   timeout:
     description: Disconnects a player with a timeout error message.
     usage: /timeout <playername>
+  mutechat:
+    description: Toggles the visibility of chat messages from other players.
+    usage: /<command>
 permissions:
   verangutilities.stackup:
     description: Allows use of the stackup command
@@ -33,4 +36,6 @@ permissions:
   verangutilities.timeout:
     description: Allows the user to disconnect players with a timeout error message.
     default: op
-
+  verangutilities.mutechat:
+    description: Allows toggling the visibility of chat messages from other players.
+    default: true

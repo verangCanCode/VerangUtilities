@@ -61,3 +61,6 @@ messages:
   # MuteChat command messages
   chat-muted: "Chat messages from other players are now hidden."
   chat-unmuted: "Chat messages from other players are now visible."
+
+  # Autosvae
+  autosave-complete: "All the worlds in the server have been auto-saved"

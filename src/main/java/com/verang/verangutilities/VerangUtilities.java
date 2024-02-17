@@ -28,6 +28,9 @@ public class VerangUtilities extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ClickableChat(this), this);
         getServer().getPluginManager().registerEvents(new AllowCapsInCommands(this), this);
         getServer().getPluginManager().registerEvents(new ChatEventListener(this), this); // Registering the chat event listener
+
+        // Schedule autosave task
+        scheduleAutosave();
     }
 
     @Override
@@ -62,5 +65,14 @@ public class VerangUtilities extends JavaPlugin {
 
     public boolean hasChatMuted(Player player) {
         return mutedChats.contains(player.getUniqueId());
+    }
+
+    private void scheduleAutosave() {
+        // Schedule the autosave task to run every 15 minutes (18000 ticks)
+        this.getServer().getScheduler().runTaskTimer(this, () -> {
+            this.getServer().dispatchCommand(this.getServer().getConsoleSender(), "save-all");
+            String autosaveMessage = getConfig().getString("messages.autosave-complete", "Worlds have been autosaved.");
+            getLogger().info(autosaveMessage);
+        }, 0L, 18000L); // 20 ticks = 1 second, so 18000 ticks = 15 minutes
     }
 }

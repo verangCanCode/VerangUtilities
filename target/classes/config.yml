@@ -1,20 +1,45 @@
+# ---------------------------------------------------------------------------------
+#     _   _ ___________  ___   _   _ _____
+#    | | | |  ___| ___ \/ _ \ | \ | |  __ \
+#    | | | | |__ | |_/ / /_\ \|  \| | |  \/
+#    | | | |  __||    /|  _  || . ` | | __
+#    \ \_/ / |___| |\ \| | | || |\  | |_\ \
+#     \___/\____/\_| \_\_| |_/\_| \_/\____/
 #
-# This is the prefix value, before any message is sent to the player. I.e. a message below will look like
-# "VerangUtilities » Only players can use this command"
+#      Simple utility plugin for Builders
+# ---------------------------------------------------------------------------------
+
+# This configuration file allows you to customize messages and settings for the
+# Verang Utilities plugin. Messages support color codes using the '&' symbol.
+#
+# Prefix Configuration:
+# The prefix is prepended to all plugin messages sent to players.
+# Example: "VerangUtilities » This is a message."
 #
 prefix: "&6&lVerang Utilities &8&l» &r"
 
-#
-# You may edit any values from the text below, without the need to add the prefix,
-# and any color coding, as that will be done automatically by the plugin.
+# Messages Configuration:
+# Customize the response messages for various plugin actions and commands.
+# You can edit these messages freely. Remember to use color codes to enhance
+# visibility and aesthetics.
 #
 messages:
+  # General messages
   command-player-only: "Only players can use this command."
   invalid-number: "Invalid number. Please enter a valid number."
   no-permission: "You do not have permission to use this command."
+
+  # StackUp command messages
   not-enabled: "StackUp is not currently enabled."
+  stackup-usage: "Usage: &e/stackup <amount> [-a] &ror &e/stackup off"
+  stackup-disabled: "Stack Up has been disabled."
+  stackup-enabled: "Stack Up is now enabled with a height of &e<amount>&r."
+
+  # Caps command messages
   caps-allowed: "Caps in commands are now allowed."
   caps-disallowed: "Caps in commands are now disallowed."
+
+  # FindHome command messages
   findhome-usage: "Usage: &e/findhome <player name> <home name>"
   player-not-found: "Player not found."
   user-data-not-found: "User data not found."
@@ -23,11 +48,19 @@ messages:
   home-location: "&e<player>&r's home &e<home>&r is located in the world &e<world>&r."
   error-reading-home: "An error occurred while trying to find the home."
   essentials-not-found: "Essentials plugin not found. Please install Essentials for this feature."
+
+  # Timeout command messages
   timeout-usage: "Usage: &e/timeout <playername>"
   player-not-online: "The specified player is not online."
   player-kicked: "You have disconnected &e<player>&r with a Timeout error."
   kick-message: "Connection Error: Unhandled exception in server's UDP packet handler. Try again after the main server queue has been cleared."
+
+  # Clickable chat messages
   clickable-chat-message: "Click here to visit &e<url>&r."
-  stackup-usage: "Usage: &e/stackup <amount> [-a] &ror &e/stackup off"
-  stackup-disabled: "Stack Up has been disabled."
-  stackup-enabled: "Stack Up is now enabled with a height of &e<amount>&r."
+
+  # MuteChat command messages
+  chat-muted: "Chat messages from other players are now hidden."
+  chat-unmuted: "Chat messages from other players are now visible."
+
+  # Autosvae
+  autosave-complete: "All the worlds in the server have been auto-saved"
