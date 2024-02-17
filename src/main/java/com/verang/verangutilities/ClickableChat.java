@@ -13,7 +13,8 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class ClickableChat implements Listener {
-    private static final Pattern URL_PATTERN = Pattern.compile("(https?://[\\w-]+(\\.[\\w-]+)+([/?#][\\w-.]*)?)", Pattern.CASE_INSENSITIVE);
+    // Updated pattern to better match URLs including paths and queries
+    private static final Pattern URL_PATTERN = Pattern.compile("(https?://[\\w-]+(?:\\.[\\w-]+)+[\\w-./?=&#%+]*)", Pattern.CASE_INSENSITIVE);
     private final JavaPlugin plugin;
 
     public ClickableChat(JavaPlugin plugin) {
@@ -42,7 +43,7 @@ public class ClickableChat implements Listener {
 
             // Add the URL component
             TextComponent urlComponent = new TextComponent(url);
-            urlComponent.setColor(ChatColor.of("#83c9d6"));
+            urlComponent.setColor(ChatColor.of("#83c9d6")); // Ensure this color works for your version or adjust as necessary
             urlComponent.setItalic(true);
             urlComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, url.startsWith("http") ? url : "http://" + url));
             chatMessage.addExtra(urlComponent);
@@ -65,4 +66,3 @@ public class ClickableChat implements Listener {
         }
     }
 }
-
